@@ -1,3 +1,6 @@
-/Debug
-/.vs
-/Shooter3d/Debug
+Debug/
+SFML/
+.vs/
+.vscode/
+Shooter3d/Debug/
+build/
