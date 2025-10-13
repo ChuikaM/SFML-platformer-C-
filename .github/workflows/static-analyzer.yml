@@ -17,7 +17,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y clang-tidy cppcheck cmake
 
       - name: Configure CMake
-        run: cmake -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+        run: cmake -S src -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 
       - name: Run clang-tidy
         run: clang-tidy -p build $(find . -name '*.cpp') --header-filter='.*'
