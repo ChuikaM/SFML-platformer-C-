@@ -1,0 +1,26 @@
+name: Static Analysis
+
+on:
+  pull_request:
+    branches: [ master ]
+  push:
+    branches: [ master ]
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y clang-tidy cppcheck cmake
+
+      - name: Configure CMake
+        run: cmake -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+
+      - name: Run clang-tidy
+        run: clang-tidy -p build $(find . -name '*.cpp') --header-filter='.*'
+
+      - name: Run cppcheck
+        run: cppcheck --enable=all --inconclusive --std=c++20 --project=build/compile_commands.json
