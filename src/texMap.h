@@ -1,6 +1,5 @@
 #include <SFML/Graphics.hpp>
 using namespace sf;
-//const int WIDTH3 = 366;
 const int HEIGHTT = 39;
 sf::String texMap[HEIGHTT]
 {

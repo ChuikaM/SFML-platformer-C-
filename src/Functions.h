@@ -2,7 +2,6 @@
 #include"texMap.h"
 #include<iostream>
 #include<string>
-//std::string textMap = "map";
 std::string textMap = "map3";
 void drawMap(RenderWindow* window,RectangleShape wall, RectangleShape buff, RectangleShape goUp,float x,float y) {
 	bool isWall = false;
@@ -502,54 +501,50 @@ void posMap(float* x, float* y,char ch) {
 }
 void posMap2(float* coordE, char ch) {
 	int h = 0;
-	//int w = 0;
-		if (textMap == "map") {
-			for (int i = 0; i < HEIGHT; i++)
-				for (int j = 0; j < WIDTH; j++)
-				{
-					if (map[i][j] == ch) {
-						coordE[h++] = 32 * j;
-						coordE[h] = 32 * i;
-						++h;
-					}
+	if (textMap == "map") {
+		for (int i = 0; i < HEIGHT; i++)
+			for (int j = 0; j < WIDTH; j++)
+			{
+				if (map[i][j] == ch) {
+					coordE[h++] = 32 * j;
+					coordE[h] = 32 * i;
+					++h;
 				}
-		}
-		else if (textMap == "map2") {
-			for (int i = 0; i < HEIGHT2; i++)
-				for (int j = 0; j < WIDTH2; j++)
-				{
-					if (map2[i][j] == ch) {
-						coordE[h++] = 32 * j;
-						coordE[h] = 32 * i;
-						++h;
-					}
+			}
+	}
+	else if (textMap == "map2") {
+		for (int i = 0; i < HEIGHT2; i++)
+			for (int j = 0; j < WIDTH2; j++)
+			{
+				if (map2[i][j] == ch) {
+					coordE[h++] = 32 * j;
+					coordE[h] = 32 * i;
+					++h;
 				}
-		}
-		else if (textMap == "map3") {
-			//std::cout << "\nH: " << h << "\n";
-			for (int i = 0; i < HEIGHT3; i++)
-				for (int j = 0; j < WIDTH3; j++)
-				{
-					if (map3[i][j] == ch) {
-						coordE[h++] = 32 * j;
-						coordE[h] = 32 * i;
-						++h;
-					}
+			}
+	}
+	else if (textMap == "map3") {
+		for (int i = 0; i < HEIGHT3; i++)
+			for (int j = 0; j < WIDTH3; j++)
+			{
+				if (map3[i][j] == ch) {
+					coordE[h++] = 32 * j;
+					coordE[h] = 32 * i;
+					++h;
 				}
-		}
-		else if (textMap == "map4") {
-			///std::cout << "\nH: " << h << "\n";
-			for (int i = 0; i < HEIGHT4; i++)
-				for (int j = 0; j < WIDTH4; j++)
-				{
-					if (map4[i][j] == ch) {
-						coordE[h++] = 32 * j;
-						coordE[h] = 32 * i;
-						++h;
-					}
+			}
+	}
+	else if (textMap == "map4") {
+		for (int i = 0; i < HEIGHT4; i++)
+			for (int j = 0; j < WIDTH4; j++)
+			{
+				if (map4[i][j] == ch) {
+					coordE[h++] = 32 * j;
+					coordE[h] = 32 * i;
+					++h;
 				}
-		}
-	//	std::cout << "\nH: " << h << "\n";
+			}
+	}
 }
 
 void changeMap(String* Map1, String* Map2, const int WIDTHCs, const int HEIGHTCs,char ch) {
