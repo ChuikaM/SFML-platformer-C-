@@ -23,12 +23,45 @@ jobs:
 
       - name: Run clang-tidy
         run: |
-          clang-tidy -p build $(find src -name '*.cpp') --header-filter='.*' > clang-tidy.log || true
-          WARNINGS=$(grep -c "warning:" clang-tidy.log)
-          echo "clang-tidy warnings: $WARNINGS"
+          echo "🔍 Running clang-tidy..."
+          
+          # Run clang-tidy and save output
+          clang-tidy -p build $(find src -name '*.cpp') --header-filter='.*' 2>&1 | tee clang-tidy-detailed.log
+          
+          WARNINGS=$(grep -c "warning:" clang-tidy-detailed.log || true)
+          
+          echo ""
+          echo "📊 ANALYSIS SUMMARY"
+          echo "===================="
+          echo "⚠️  Total warnings: $WARNINGS"
+          echo ""
+          
+          if [ "$WARNINGS" -gt 0 ]; then
+            echo "🔍 WARNINGS BY FILE:"
+            echo "===================="
+            
+            # Extract and group warnings by file
+            CURRENT_FILE=""
+            while IFS= read -r line; do
+              if [[ "$line" =~ ^(.*\.cpp|.*\.h):[0-9]+:[0-9]+: ]]; then
+                FILENAME=$(echo "$line" | cut -d: -f1)
+                if [ "$FILENAME" != "$CURRENT_FILE" ]; then
+                  CURRENT_FILE="$FILENAME"
+                  echo ""
+                  echo "📄 $CURRENT_FILE:"
+                  echo "----------------------------------------"
+                fi
+                echo "$line" | sed 's/^[^:]*:[^:]*:[^:]*: //'
+              fi
+            done < clang-tidy-detailed.log
+            echo ""
+          fi
+          
           if [ "$WARNINGS" -gt 5 ]; then
             echo "❌ Too many warnings ($WARNINGS). Failing the build."
             exit 1
           else
             echo "✅ Warning count acceptable."
           fi
+
+
