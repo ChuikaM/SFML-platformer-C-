@@ -252,14 +252,14 @@ int main()
 
 			Text2.setPosition(view.getCenter().x - 170, view.getCenter().y - 150);
 			window.draw(Text2);
-			if (textMap != "map" || textMap != "map4") {
+			/*if (textMap != "map" || textMap != "map4") {
 				for (int i = 0; i < NUM_OF_ENEMYES; i++) {
 					//std::cout << "\nHell\n";
 					eN[i].update(time);
 					interrect(&p, &eN[i]);
 					window.draw(eN[i].en);
 				}
-			}
+			}*/
 		}
 		if (isView) {
 			setDoors(isOpenAtMap);

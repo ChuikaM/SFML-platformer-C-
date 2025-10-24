@@ -14,13 +14,15 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install dependencies
-        run: sudo apt-get update && sudo apt-get install -y clang-tidy cppcheck cmake
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang-tidy cppcheck cmake libsfml-dev
 
       - name: Configure CMake
         run: cmake -S src -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 
       - name: Run clang-tidy
-        run: clang-tidy -p build $(find . -name '*.cpp') --header-filter='.*'
+        run: clang-tidy -p build $(find src -name '*.cpp') --header-filter='.*'
 
       - name: Run cppcheck
-        run: cppcheck --enable=all --inconclusive --std=c++20 --project=build/compile_commands.json
+        run: cppcheck --enable=all --inconclusive --std=c++17 --project=build/compile_commands.json
