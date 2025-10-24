@@ -1,13 +1,12 @@
 #include <SFML/Graphics.hpp>
 #include <sstream>
-#include<Windows.h>
-#include<vector>
-#include"SomeClasses.h"
+#include <vector>
+#include "SomeClasses.h"
 
 using namespace sf;
+
 int main()
 {
-	ShowWindow(GetConsoleWindow(), SW_SHOW);
 	float coordE[NUM_OF_ENEMYES * 2];
 	float xB, yB;
 	sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
