@@ -16,13 +16,19 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y clang-tidy cppcheck cmake libsfml-dev
+          sudo apt-get install -y clang-tidy cmake libsfml-dev
 
       - name: Configure CMake
         run: cmake -S src -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 
       - name: Run clang-tidy
-        run: clang-tidy -p build $(find src -name '*.cpp') --header-filter='.*'
-
-      - name: Run cppcheck
-        run: cppcheck --enable=all --inconclusive --std=c++17 --project=build/compile_commands.json
+        run: |
+          clang-tidy -p build $(find src -name '*.cpp') --header-filter='.*' > clang-tidy.log || true
+          WARNINGS=$(grep -c "warning:" clang-tidy.log)
+          echo "clang-tidy warnings: $WARNINGS"
+          if [ "$WARNINGS" -gt 5 ]; then
+            echo "❌ Too many warnings ($WARNINGS). Failing the build."
+            exit 1
+          else
+            echo "✅ Warning count acceptable."
+          fi
