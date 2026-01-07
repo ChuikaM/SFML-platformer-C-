@@ -17,4 +17,4 @@ FetchContent_Declare(SFML
 FetchContent_MakeAvailable(SFML)
 
 add_executable(${PROJECT_NAME} main.cpp)
-target_link_libraries(${PROJECT_NAME} PRIVATE SFML::Graphics SFML::Audio map_loader)
+target_link_libraries(${PROJECT_NAME} PRIVATE SFML::Graphics SFML::Audio map_loader entity)
