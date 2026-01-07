@@ -7,7 +7,7 @@ public:
     explicit TextMapLoader();
     ~TextMapLoader() override;
 
-    void load(const char* fileName);
+    void load(const std::filesystem::path& filename);
     void doCollision();
 
     void draw(sf::RenderTarget& target,
