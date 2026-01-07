@@ -10,7 +10,7 @@ public:
     void load(const char* fileName);
     void doCollision();
 
-    void TextMapLoader::draw(sf::RenderTarget& target,
+    void draw(sf::RenderTarget& target,
                          sf::RenderStates states) const override;
-                         
+
 };
