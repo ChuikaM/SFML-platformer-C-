@@ -14,8 +14,6 @@ void Player::update(float time)
     case JUMP:  break;
     case STAY: dx = 0; CurrentFrame = 0; break;
     }
-    if(state != CLIMB)
-        y += dy * time;
     if (!isMove) {
         speed = 0;
     }
