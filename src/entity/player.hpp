@@ -12,12 +12,14 @@ public:
 private:  
 	float score;
 	enum { LEFT, RIGHT, UP, DOWN, JUMP, STAY, CLIMB } state { STAY };
-	bool isMove, onGround;
-	bool isLife;
-	float w, h, dx, dy, speed;
-	int dir { 0 };
+	bool isMove {};
+	bool onGround {};
+	float dx {};
+	float dy {};
+	float speed { 0.3f };
+	int dir {};
 
-	float CurrentFrame { 0 };
+	float CurrentFrame {};
 	sf::SoundBuffer jumpBuffer;
 	sf::SoundBuffer peekBuffer;
 	sf::Sound peek;
