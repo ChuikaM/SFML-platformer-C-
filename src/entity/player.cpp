@@ -4,23 +4,23 @@ void Player::update(float time)
 {
     switch (state)
     {
-    case right: dx = speed; dxT = speed; 
+    case RIGHT: dx = speed;
         break;
-    case left: dx = -speed;  dxT = -speed; 
+    case LEFT: dx = -speed;
         
         break;
-    case up: break;
-    case down: break;
-    case jump:  break;
-    case stay: dx = 0; CurrentFrame = 0; break;
+    case UP: break;
+    case DOWN: break;
+    case JUMP:  break;
+    case STAY: dx = 0; CurrentFrame = 0; break;
     }
-    if(state != climb)
+    if(state != CLIMB)
         y += dy * time;
     if (!isMove) {
         speed = 0;
     }
     move({dx * time, dy * time});
-    if (state != climb) {
+    if (state != CLIMB) {
         dy = dy + 0.0015*time;
     }
 }
