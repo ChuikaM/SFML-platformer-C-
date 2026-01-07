@@ -4,7 +4,7 @@
 class IEntity : public sf::Sprite
 {
 public:
-    virtual ~IEntity() = 0;
+    virtual ~IEntity() = default;
     virtual void update(float time) = 0;
 
 };
