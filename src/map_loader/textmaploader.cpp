@@ -1,8 +1,6 @@
 #include <textmaploader.hpp>
 
 #include <SFML/Graphics/RenderTarget.hpp>
-#include <SFML/Graphics/Drawable.hpp>
-#include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <unordered_set>
 #include <fstream>
@@ -10,8 +8,10 @@
 
 TextMapLoader::TextMapLoader()
 {
-    m_block_textures.emplace('0', "../img/wall.png");
-    m_block_textures.emplace('U', "../img/ladder.png");
+    m_block_textures.emplace('0', "img/wall.png");
+    m_block_textures.emplace('U', "img/ladder.png");
+    m_block_textures.emplace('C', "img/coin.png");
+    m_block_textures.emplace('X', "img/buff.png");
 }
 
 void TextMapLoader::load(const std::filesystem::path& filename)

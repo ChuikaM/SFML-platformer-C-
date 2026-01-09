@@ -1,0 +1,33 @@
+{
+    "version": 3,
+    "configurePresets": [
+        {
+            "name": "mingw",
+            "displayName": "MinGW Config",
+            "generator": "MinGW Makefiles",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+            "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "ninja",
+            "displayName": "Ninja Config",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+            "CMAKE_BUILD_TYPE": "Release"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "mingw",
+            "configurePreset": "mingw"
+        },
+        {
+            "name": "ninja",
+            "configurePreset": "ninja"
+        }
+    ]
+}

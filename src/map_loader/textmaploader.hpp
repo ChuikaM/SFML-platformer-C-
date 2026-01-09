@@ -2,6 +2,7 @@
 #include <imaploader.hpp> 
 #include <map>
 #include <string>
+#include <SFML/Graphics/Texture.hpp>
 
 class TextMapLoader : public IMapLoader
 {
