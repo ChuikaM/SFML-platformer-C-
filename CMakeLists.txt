@@ -9,6 +9,7 @@ if(MINGW)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static -static-libgcc -static-libstdc++")
 endif()
 
+add_subdirectory(src/resource)
 add_subdirectory(src/entity)
 add_subdirectory(src/map_loader)
 
