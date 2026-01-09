@@ -1,10 +1,10 @@
 #include <textmaploader.hpp>
-#include <enemy.hpp> 
 
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
+#include <unordered_set>
 #include <fstream>
 #include <iostream>
 
@@ -12,8 +12,6 @@ TextMapLoader::TextMapLoader()
 {
     m_block_textures.emplace('0', "../img/wall.png");
     m_block_textures.emplace('U', "../img/ladder.png");
-
-    m_enemies_textures.emplace('K', "../img/ghost.png");
 }
 
 void TextMapLoader::load(const std::filesystem::path& filename)
@@ -23,13 +21,16 @@ void TextMapLoader::load(const std::filesystem::path& filename)
     try
     {
         is.open(filename);
-        m_map = { 
+        m_map.assign( 
             std::istreambuf_iterator<char>(is), 
             std::istreambuf_iterator<char>()
-        };
+        );
 
-        int row = 0;
-        int col = 0;
+        static const std::unordered_set<char> enemySymbols { 'K' };
+        static const std::unordered_set<char> playerSymbols { 'P' };
+
+        std::size_t row = 0;
+        std::size_t col = 0;
         for(const auto& ch : m_map)
         {
             if(ch == '\n')
@@ -38,12 +39,13 @@ void TextMapLoader::load(const std::filesystem::path& filename)
                 col = 0;
                 continue;
             }
-            auto it = m_enemies_textures.find(ch);
-            if(it != m_enemies_textures.end())
+            if(enemySymbols.count(ch))
             {
-                auto enemy = std::make_unique<Enemy>(it->second);
-                enemy->setPosition({col * BLOCK_SIZE, row * BLOCK_SIZE});
-                m_enemies.push_back(std::move(enemy));
+                pushBackEnemyPosition({ch, {col * BLOCK_SIZE, row * BLOCK_SIZE}});
+            }
+            if(playerSymbols.count(ch))
+            {
+                pushBackPlayerPosition({ch, {col * BLOCK_SIZE, row * BLOCK_SIZE}});
             }
             col++;
         }
@@ -52,36 +54,30 @@ void TextMapLoader::load(const std::filesystem::path& filename)
     {
         std::cerr << "[ERORR][TextMapLoader::load] " << e.what() << std::endl;
     }
-    is.close();
-}
-
-void TextMapLoader::doCollision()
-{
-    // Doing collision here
-}
-
-void TextMapLoader::update(float time)
-{
-    for(const auto& enemy : m_enemies)
-    {
-        enemy->update(time);
-    }
 }
 
 void TextMapLoader::draw(sf::RenderTarget& target,
                          sf::RenderStates states) const
 {
     sf::Sprite block{ m_block_textures.begin()->second };
+    std::size_t y = 0;
+    std::size_t x = 0;
     for (const auto& ch : m_map) {
+        if(ch == '\n')
+        {
+            y++;
+            x = 0;
+            continue;
+        }
+
         auto it = m_block_textures.find(ch);
         if (it != m_block_textures.end()) {
             block.setTexture(it->second);
+            auto size = it->second.getSize();
+            block.setPosition({x * size.x, y * size.y});
             target.draw(block, states);
         }
-    }
 
-    for(const auto& enemy : m_enemies)
-    {
-        target.draw(*enemy, states);
+        x++;
     }
 }
